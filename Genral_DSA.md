@@ -88,21 +88,3 @@ public class QuickSort {
 }
 
 ```
-
-##### Reverse Linked List
-
-```
-class Solution {
-    public ListNode reverseList(ListNode head) {
-        if(head == null) return null;
-        if(head.next == null)
-           return head;
-        
-        ListNode last = reverseList(head.next); // find last node
-        head.next.next = head; // reverse link
-        head.next = null; // remove exsisting link
-        return last; // tell others that i am last ( return last)
-    }
-}
-```
-
