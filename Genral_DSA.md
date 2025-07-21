@@ -1,90 +1,109 @@
-## Recursion
+## Most Asked DSA Questions
 
-#### QuickSort
+### 1. Reverse a Linked List
 
-1. Pivot Selection
-2. Partitioning ( get the pivot index )
-3. Recursion
-   
-```
+**Explanation:**  
+Reversing a linked list means changing the direction of the pointers so that the last node becomes the first node. This tests your understanding of pointers and linked list manipulation.
+
+```java
 class Solution {
-    static void quickSort(int arr[], int low, int high) {
-        if (low >= high) return;
-        int pivotIndex = partition(arr, low, high);
-        quickSort(arr, low, pivotIndex - 1);
-        quickSort(arr, pivotIndex + 1, high);
-    }
-
-    static int partition(int arr[], int low, int high) {
-        int pivot = arr[high];
-        int index = low;
-        
-        for (int i = low; i < high; i++) {
-            if (arr[i] < pivot) {
-                int temp = arr[i];
-                arr[i] = arr[index];
-                arr[index] = temp;
-                index++;
-            }
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+        while (curr != null) {
+            ListNode nextTemp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextTemp;
         }
-        
-        int temp = arr[index];
-        arr[index] = arr[high];
-        arr[high] = temp;
-        
-        return index;
+        return prev;
     }
 }
-
 ```
-#### MergeSort
-1.Divide the array into subparts.
-2.Merge sortted list.
-```
-public class QuickSort {
-    public static void merge(int[] arr,int low,int mid,int high){
-        int[] b = new int[arr.length];
-        int k = low;
-        int i = low,j = mid + 1;
-        while (i <= mid && j <= high) {
-            if(arr[i] <= arr[j]){
-                b[k++] = arr[i++];
-            }
-            else{
-                b[k++] = arr[j++];
-            }
-        }
-        while (i <= mid) {
-            b[k++] = arr[i++]; 
-        }
-        while (j <= high) {
-            b[k++] = arr[j++];
-        }
-        for(int m = low;m < high;m++){
-            arr[m] = b[m];
-        }
 
-    }
-   
-    public static void mergeSort(int[] arr,int low,int high){
-        if( low == high)
-          return;
-        int mid = low + ( high - low )/2;
-        mergeSort(arr, low, mid);
-        mergeSort(arr, mid + 1, high);
-        merge(arr,low,mid,high);
-    }
-    public static void main(String[] args) {
-        int[] arr = {
-            1,6,7,2,4,9
-        };
-        int n = arr.length;
-        mergeSort(arr,0,n - 1);
-        for(int i = 0;i < n;i++){
-            System.out.println(arr[i]);
+---
+
+### 2. Find the Middle of a Linked List
+
+**Explanation:**  
+Use two pointers: the slow pointer moves one node at a time, while the fast pointer moves two nodes. When fast reaches the end, slow will be at the middle.
+
+```java
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
-    
+        return slow;
     }
 }
-
 ```
+
+---
+
+### 3. Two Sum Problem
+
+**Explanation:**  
+Given an array of integers, return indices of two numbers that add up to a specific target. This problem checks your hashing skills.
+
+```java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[] { map.get(complement), i };
+            }
+            map.put(nums[i], i);
+        }
+        return new int[] {};
+    }
+}
+```
+
+---
+
+### 4. Detect Cycle in a Linked List
+
+**Explanation:**  
+Use Floyd’s Cycle detection algorithm (Tortoise and Hare). If there’s a cycle, the fast and slow pointers will eventually meet.
+
+```java
+class Solution {
+    public boolean hasCycle(ListNode head) {
+        if (head == null) return false;
+        ListNode slow = head, fast = head.next;
+        while (fast != null && fast.next != null) {
+            if (slow == fast) return true;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return false;
+    }
+}
+```
+
+---
+
+### 5. Maximum Subarray Sum (Kadane’s Algorithm)
+
+**Explanation:**  
+Find the contiguous subarray with the largest sum. Kadane’s Algorithm is efficient and widely used for this.
+
+```java
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxSoFar = nums[0], maxEndingHere = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            maxEndingHere = Math.max(nums[i], maxEndingHere + nums[i]);
+            maxSoFar = Math.max(maxSoFar, maxEndingHere);
+        }
+        return maxSoFar;
+    }
+}
+```
+
+---
